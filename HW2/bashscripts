@@ -1,0 +1,23 @@
+for ((i=100;i<=1000;i+=2))
+do
+    echo $i
+done
+
+
+echo 100+0.5 | bc
+
+FILE="Linux"
+if [ -f $FILE ]; then
+   echo "course"
+else
+   echo "very easy"
+   echo "course is easy" > $FILE
+fi
+
+
+arr=("1" "2" "3" "1" "2" "3" "1" "2" "3" "1" "2" "3")
+
+for i in "${arr[@]}"
+do
+   echo "$i"
+done

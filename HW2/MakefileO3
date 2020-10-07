@@ -1,0 +1,14 @@
+CC=g++
+CFLAGS=-c -Wall -O3
+LDFLAGS=
+SOURCES=main.cpp create_matrix.cpp matrix_mult.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=run.exe
+
+all: $(SOURCES) $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+
+.cpp.o:
+	$(CC) $(CFLAGS) $< -o $@

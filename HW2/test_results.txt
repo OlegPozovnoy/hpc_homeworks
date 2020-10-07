@@ -1,0 +1,24 @@
+test results:
+-O3 native:
+Running time for dem=512: 0.302235
+Running time for dem=1024: 4.46305
+Running time for dem=2048: 62.4831
+Running time for dem=4096: 615.732
+
+-g native:
+Running time for dim=512: 2.1254
+Running time for dim=1024: 18.7455
+Running time for dim=2048: 180.497
+Running time for dim=4096: 1516.28
+
+-O3 virtual machine
+Running time for dem=512: 0.523972
+Running time for dem=1024: 4.49912
+Running time for dem=2048: 137.797
+Running time for dem=4096: 1204.34
+
+-g virtual machine
+Running time for dem=512: 2.33791
+Running time for dem=1024: 19.3848
+Running time for dem=2048: 223.684
+Running time for dem=4096: 2069.85

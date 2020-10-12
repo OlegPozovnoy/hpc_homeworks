@@ -29,7 +29,7 @@ int main (int argc, char *argv[])
     float sum;
     float a[N], b[N];
 
-    #pragma omp prarllel for default(none) private(i) shared(a,b)
+    #pragma omp parallel for default(none) private(i) shared(a,b)
     for (i = 0; i < N; ++i)
     {
         a[i] = b[i] = (double)i;

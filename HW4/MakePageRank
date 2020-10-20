@@ -1,0 +1,14 @@
+CC=gcc
+CFLAGS=-fopenmp -c -Wall -o3
+LDFLAGS=-fopenmp
+SOURCES=main_pagerank.c matrix_utils.c
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=pagerank.exe
+
+all: $(SOURCES) $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+
+.c.o:
+	$(CC) $(CFLAGS) $< -o $@

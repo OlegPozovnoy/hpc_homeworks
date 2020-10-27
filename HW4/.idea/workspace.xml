@@ -28,14 +28,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9bb6f451-71c0-4963-a2ce-43878618101f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/MakeMatrixMult" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MakePageRank" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main_matrixmult.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main_matrixmult.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main_pagerank.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main_pagerank.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matrix_utils.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/matrix_utils.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,13 +60,6 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -85,6 +71,7 @@
       <workItem from="1602734701276" duration="7021000" />
       <workItem from="1602959745062" duration="6300000" />
       <workItem from="1603187942143" duration="14245000" />
+      <workItem from="1603796599245" duration="848000" />
     </task>
     <servers />
   </component>

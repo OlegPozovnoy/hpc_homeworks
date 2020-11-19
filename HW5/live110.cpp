@@ -24,18 +24,13 @@ using namespace std;
 
 int main(int argc, char **argv) {
     int prank, psize;
-    omp_set_num_threads(1);
+    omp_set_num_threads(2);
     MPI_Status status;
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &prank);
     MPI_Comm_size(MPI_COMM_WORLD, &psize);
 
     bool periodic = false;
-
-    if (psize <= 1) {
-        printf("Число процессов не может быть один, иначе какой же это MPI. Выхожу.");
-        return 0;
-    }
 
     int (*rule)(const int &, const int &, const int &);
     rule = rule110;
@@ -75,19 +70,27 @@ int main(int argc, char **argv) {
         int send_to_left = (prank == 0) ? psize - 1 : prank - 1;
         int send_to_right = (prank == psize - 1) ? 0 : prank + 1;
 
-        if (periodic || prank != 0)
-            MPI_Send(&buf[(piece_size + 2) * row + 1], 1, MPI_INT, send_to_left, row, MPI_COMM_WORLD);
+        if (periodic && psize > 1) {
+            if (prank != 0)
+                MPI_Send(&buf[(piece_size + 2) * row + 1], 1, MPI_INT, send_to_left, row, MPI_COMM_WORLD);
 
-        if (periodic || prank != psize - 1)
-            MPI_Send(&buf[(piece_size + 2) * row + piece_size], 1, MPI_INT, send_to_right, row, MPI_COMM_WORLD);
+            if (prank != psize - 1)
+                MPI_Send(&buf[(piece_size + 2) * row + piece_size], 1, MPI_INT, send_to_right, row, MPI_COMM_WORLD);
 
-        if (periodic || prank != 0)
-            MPI_Recv(&buf[(piece_size + 2) * row], 1, MPI_INT, send_to_left, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+            if (prank != 0)
+                MPI_Recv(&buf[(piece_size + 2) * row], 1, MPI_INT, send_to_left, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
 
-        if (periodic || prank != psize - 1)
-            MPI_Recv(&buf[(piece_size + 2) * row + piece_size + 1], 1, MPI_INT, send_to_right, MPI_ANY_TAG,
-                     MPI_COMM_WORLD,
-                     &status);
+            if (prank != psize - 1)
+                MPI_Recv(&buf[(piece_size + 2) * row + piece_size + 1], 1, MPI_INT, send_to_right, MPI_ANY_TAG,
+                         MPI_COMM_WORLD,
+                         &status);
+        } else if (periodic && psize == 1) {
+            buf[(piece_size + 2) * (row + 1)] = buf[(piece_size + 2) * (row + 2) - 2];
+            buf[(piece_size + 2) * (row + 2) - 1] = buf[(piece_size + 2) * (row + 1) + 1];
+        } else {// (!periodic)
+            buf[(piece_size + 2) * (row + 1)] = left_border;
+            buf[(piece_size + 2) * (row + 2) - 1] = right_border;
+        }
 
         int omp_i;
 #pragma omp parallel default(none) private(omp_i) shared(buf, row, rule, piece_size)
@@ -100,11 +103,6 @@ int main(int argc, char **argv) {
                 buf[omp_i] = rule(buf[omp_i - 1 - (piece_size + 2)], buf[omp_i - (piece_size + 2)],
                                   buf[omp_i + 1 - (piece_size + 2)]);
             }
-        }
-        // если не периодично, копируем начальные условия
-        if (!periodic) {
-            buf[(piece_size + 2) * (row + 1)] = left_border;
-            buf[(piece_size + 2) * (row + 2) - 1] = right_border;
         }
     }
 
@@ -126,6 +124,7 @@ int main(int argc, char **argv) {
     MPI_Barrier(MPI_COMM_WORLD);
 
     if (prank == 0) {
+        // измерим здесь тк ввод вывод все таки не алгоритм
         time_elapsed = MPI_Wtime() - time_elapsed;
         char command[256];
         strcpy(command, "paste ");
